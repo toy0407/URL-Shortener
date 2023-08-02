@@ -4,6 +4,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const urlRoutes = require('./routes/urlRoutes');
+const baseRoutes = require('./routes/baseRoutes');
 const {connectDB} = require('./dbConnection');
 
 //Middleware
@@ -13,9 +14,7 @@ connectDB();
 
 
 //Routes
-app.get('/',(req,res)=>{
-    res.render('home');
-})
+app.use('/',baseRoutes);
 app.use('/url',urlRoutes);
 
 //Server
