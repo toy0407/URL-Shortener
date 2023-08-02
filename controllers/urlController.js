@@ -40,4 +40,15 @@ const findByShortId = async (req,res) => {
     return res.redirect(entry.redirectUrl);
 }
 
-module.exports = {generateShortId, findByShortId};
+const getAnalyticsOfShortId = async (req,res) => {
+    const shortId = req.params.id;
+    const entry = await Url.findOne({shortId});
+    
+    if(entry==null) return res.status(400).json({error:'Invalid shortId'});
+    return res.status(200).json({
+        count: entry.visitHistory.length,
+        visitHistory: entry.visitHistory
+    });
+}
+
+module.exports = {generateShortId, findByShortId, getAnalyticsOfShortId};
